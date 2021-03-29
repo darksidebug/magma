@@ -1,0 +1,276 @@
+<div class="container members-list" style="margin-top: 80px;">
+    <div class="table table-wrapper">
+        <table class="table-striped table-hover" id="table-data" style="min-width: 1100px">
+            <thead>
+                <tr>
+                    <td>SLNo</td>
+                    <td>Full Name</td>
+                    <td>Call Sign</td>
+                    <td>Bill Month</td>
+                    <td>Number of Month</td>
+                    <td>Total</td>
+                    <td>Actions</td>
+                </tr>
+            </thead>
+            <tbody>
+                <?php if(!empty($list['result'])): ?>
+                    <?php foreach($list['result'] as $row_data => $column_val): ?>
+                        <tr>
+                            <td class="id<?= $column_val->user_call_sign; ?>" id="<?= $column_val->id; ?>"><?= $column_val->id; ?></td>
+                            <td><a href="<?= base_url() ?>page/payments/history.html/<?= $column_val->id; ?>/"><?= $column_val->full_name; ?></a></td>
+                            <td><?= $column_val->user_call_sign; ?></td>
+                            <td><?= ($column_val->month != "" ? date('F Y', strtotime($column_val->month)) : ""); ?></td>
+                            <td><?= $column_val->count_month; ?></td>
+                            <td><?= $column_val->total; ?></td>
+                            <td>
+                                <?php if($column_val->total != 0): ?>
+                                    <a href="#" id="<?= $column_val->user_call_sign; ?>" class="btn btn-warning btn-xs pay" data-toggle="modal" data-target="#login">Pay</a>
+                                <?php endif; ?>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+            </tbody>
+        </table>
+    </div> 
+    <!-- <p class="text-center developer">Developed by: Benigno Entera Ambus Jr.</p>    -->
+</div>
+<!--- modal -->
+<form action="#" method="POST">
+    <div class="container">
+        <div class="modal fade bill_payment" id="login">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3>Members Payment</h3>
+                        <button class="btn btn-danger btn-xs close" type="button" data-dismiss="modal" id="danger">
+                        <i class="fa fa-times"></i></button>
+                    </div>
+                    <div class="modal-body">
+                        <input class="form-control" type="hidden" name="user_id" required>
+                        <div class="form-group">
+                            <label>Call Sign:</label>
+                            <input class="form-control" type="text" name="call_sign" placeholder="Call Sign" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Amount:</label>
+                            <input class="form-control" type="text" name="amount" placeholder="Amount" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Bill Month:</label>
+                            <input class="form-control" type="month" name="month" placeholder="dd/mm/yyyy" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Date Paid:</label>
+                            <input class="form-control" type="date" name="date" placeholder="dd/mm/yyyy" required>
+                        </div>
+                        <div class="form-group" align="center">
+                            <button class="btn pay_bill" type="submit">SUBMIT</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<!--- end modal -->
+
+<!--- modal -->
+    <form action="#" method="POST" name="billings">
+        <div class="container">
+            <div class="modal fade billings" id="billings">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3>Members Billings</h3>
+                            <button class="btn btn-danger btn-xs close" type="button" data-dismiss="modal" id="danger">
+                            <i class="fa fa-times"></i></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label>Amount:</label>
+                                <input class="form-control" type="text" name="bill_amount" placeholder="Amount" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Bill Month:</label>
+                                <input class="form-control" type="month" name="bill_month" placeholder="dd/mm/yyyy" required>
+                            </div>
+                            <div class="form-group" align="center">
+                                <button class="btn btn_billing" type="submit">SET BILL TO MEMBERS</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <!--- end modal -->
+
+<script>
+    $(document).ready(function(){
+        $("#table-data").DataTable();
+
+        $('.pay_bill').click(function(e){
+            e.preventDefault();
+            if($('input[name="call_sign"]').val() != '' && $('input[name="month"]').val() != ''  && 
+                $('input[name="amount"]').val() != ''  && $('input[name="date"]').val() != '')
+            {
+                $.ajax({
+                    url: '<?= base_url(); ?>user/pay_bill',
+                    type: 'POST',
+                    data: {
+                        bill_amount : $('input[name="amount"]').val(),
+                        bill_month  : $('input[name="month"]').val(),
+                        call_sign   : $('input[name="call_sign"]').val(),
+                        date        : $('input[name="date"]').val(),
+                        user_id     : $('input[name="user_id"]').val()
+                    },
+                    success:function(data){
+                        const log_oObj = JSON.parse(data);
+                        console.log(log_oObj);
+                        if(log_oObj.pay_bill == true){
+                            $('.bill_payment').modal('hide');
+                            swal(
+                                {
+                                    title: 'SUCCESSFULL',
+                                    text : log_oObj.message,
+                                    type : "success",
+                                    showCancelButton  : false,
+                                    showConfirmButton  : false,
+                                    confirmButtonColor: "#A5DC86",
+                                    confirmButtonText : "OK",
+                                    cancelButtonText  : "",
+                                    closeOnConfirm    : true,
+                                    closeOnCancel     : false 
+                                }
+                            );
+                            setTimeout(() => {
+                                window.location.href = "<?= base_url(); ?>page/view/members-bill.html";
+                            }, 1500);
+                        }
+                        else{
+                            swal(
+                                {
+                                    title: "ERROR",
+                                    text : log_oObj.message,
+                                    type : "error",
+                                    showCancelButton  : false,
+                                    confirmButtonColor: "#F27474",
+                                    confirmButtonText : "OK",
+                                    cancelButtonText  : "",
+                                    closeOnConfirm    : true,
+                                    closeOnCancel     : false 
+                                }
+                            );
+                        } 
+                    }
+                });
+            }
+        })
+
+        $('.btn_billing').click(function(e){
+            e.preventDefault();
+            if($('input[name="bill_amount"]').val() != '' && $('input[name="bill_month"]').val() != '')
+            {
+                $.ajax({
+                    url: '<?= base_url(); ?>user/set_bill',
+                    type: 'POST',
+                    data: {
+                        bill_amount : $('input[name="bill_amount"]').val(),
+                        bill_month  : $('input[name="bill_month"]').val()
+                    },
+                    success:function(data){
+                        const log_oObj = JSON.parse(data);
+                        console.log(log_oObj);
+                        if(log_oObj.set_bill == true){
+                            $('.billing').modal('hide');
+                            swal(
+                                {
+                                    title: 'SUCCESSFULL',
+                                    text : log_oObj.message,
+                                    type : "success",
+                                    showCancelButton  : false,
+                                    showConfirmButton  : true,
+                                    confirmButtonColor: "#A5DC86",
+                                    confirmButtonText : "OK",
+                                    cancelButtonText  : "",
+                                    closeOnConfirm    : true,
+                                    closeOnCancel     : false 
+                                }
+                            );
+                        }
+                        else{
+                            swal(
+                                {
+                                    title: "ERROR",
+                                    text : log_oObj.message,
+                                    type : "error",
+                                    showCancelButton  : false,
+                                    confirmButtonColor: "#F27474",
+                                    confirmButtonText : "OK",
+                                    cancelButtonText  : "",
+                                    closeOnConfirm    : true,
+                                    closeOnCancel     : false 
+                                }
+                            );
+                        } 
+                    }
+                });
+            }
+        })
+
+        $('.pay').click(function(){
+            $('input[name="call_sign"]').val($(this).attr('id'));
+            $('input[name="user_id"]').val($('.id' + $(this).attr('id')).attr('id'));
+        })
+
+        $('.delete').click(function(){
+            if(confirm('Are you sure you want to delete? This action cannot be undone.') == true)
+            {
+                $.ajax({
+                    url: '<?= base_url(); ?>user/delete',
+                    type: 'POST',
+                    data: {id: $(this).attr('id')},
+                    success:function(data){
+                        const log_oObj = JSON.parse(data);
+                        console.log(log_oObj);
+                        if(log_oObj.delete == true){
+                            swal(
+                                {
+                                    title: 'SUCCESSFULL',
+                                    text : log_oObj.message,
+                                    type : "success",
+                                    showCancelButton  : false,
+                                    showConfirmButton  : true,
+                                    confirmButtonColor: "#A5DC86",
+                                    confirmButtonText : "OK",
+                                    cancelButtonText  : "",
+                                    closeOnConfirm    : true,
+                                    closeOnCancel     : false 
+                                }
+                            );
+                        }
+                        else{
+                            swal(
+                            {
+                                title: "ERROR",
+                                text : log_oObj.message,
+                                type : "error",
+                                showCancelButton  : false,
+                                confirmButtonColor: "#F27474",
+                                confirmButtonText : "OK",
+                                cancelButtonText  : "",
+                                closeOnConfirm    : true,
+                                closeOnCancel     : false 
+                            }
+                        );
+                        } 
+                    }
+                });
+            }
+            else{
+                return false;
+            }
+        })
+    })
+</script>

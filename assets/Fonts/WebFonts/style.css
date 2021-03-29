@@ -1,0 +1,101 @@
+
+/* Webfont: Billaneiva */@font-face {
+    font-family: 'Billaneiva';
+    src: url('fonts/Billaneiva/Billaneiva.otf') format('otf'), /* Modern Browsers */
+         url('fonts/Billaneiva/Billaneiva.ttf') format('truetype');
+    font-style: normal;
+    font-weight: normal;
+    text-rendering: optimizeLegibility;
+}
+
+/* Webfont:Brittany Sans Bold */@font-face {
+    font-family: 'Brittany Sans Bold';
+    src: url('fonts/Brittany/The Brittany Sans Bold.otf') format('otf'), /* Modern Browsers */
+         url('fonts/Brittany/The Brittany Sans Bold.ttf') format('truetype');      
+    font-style: normal;
+    font-weight: normal;
+    text-rendering: optimizeLegibility;
+}
+
+/* Webfont: Brittany Sans */@font-face {
+    font-family: 'Brittany Sans';
+    src: url('fonts/Brittany/The Brittany Sans.ttf') format('truetype');
+    font-style: normal;
+    font-weight: normal;
+    text-rendering: optimizeLegibility;
+}
+
+/* Webfont: Brittany Serif */@font-face {
+    font-family: 'Brittany Serif';
+    src: url('fonts/Brittany/The Brittany Serif 2.otf') format('otf'), /* Modern Browsers */
+         url('fonts/Brittany/The Brittany Serif 2.ttf') format('truetype');  
+    font-style: normal;
+    font-weight: normal;
+    text-rendering: optimizeLegibility;
+}
+
+/* Webfont: Rosario */@font-face {
+    font-family: 'Rosario';
+    src: url('fonts/Rosario/regular.otf') format('otf'), /* Modern Browsers */
+         url('fonts/Rosario/regular.otf') format('truetype');  
+    font-style: normal;
+    font-weight: normal;
+    text-rendering: optimizeLegibility;
+}
+
+/* Webfont: Roboto */@font-face {
+    font-family: 'Roboto';
+    src: url('fonts/Roboto/100.ttf') format('otf');       
+    font-style: normal;
+    font-weight: normal;
+    text-rendering: optimizeLegibility;
+}
+
+/* Webfont: PT Sans */@font-face {
+    font-family: 'PT Sans';
+    src: url('fonts/PT Sans/regular.ttf') format('truetype');       
+    font-style: normal;
+    font-weight: normal;
+    text-rendering: optimizeLegibility;
+}
+
+/* Webfont: Wedding Party */@font-face {
+    font-family: 'Wedding Party';
+    src: url('fonts/wedding/Wedding Party.otf') format('otf'), /* Modern Browsers */
+         url('fonts/wedding/Wedding Party.ttf') format('truetype');  
+    font-style: normal;
+    font-weight: normal;
+    text-rendering: optimizeLegibility;
+}
+
+/* Webfont: Choppin Script */@font-face {
+    font-family: 'ChopinScript';
+    src: url('fonts/chopin/ChopinScript.otf') format('otf');       
+    font-style: normal;
+    font-weight: normal;
+    text-rendering: optimizeLegibility;
+}
+
+/* Webfont: Automn */@font-face {
+    font-family: 'Autumn in November';
+    src: url('fonts/autumn/Autumn in November.ttf') format('truetype');       
+    font-style: normal;
+    font-weight: normal;
+    text-rendering: optimizeLegibility;
+}
+
+/* Webfont: Oswald */@font-face {
+    font-family: 'Oswald';
+    src: url('../oswald/oswald.woff2') format('truetype');       
+    font-style: normal;
+    font-weight: normal;
+    text-rendering: optimizeLegibility;
+}
+
+/* Webfont: Montserrat */@font-face {
+    font-family: 'Montserrat';
+    src: url('../montserrat/montserrat.woff2') format('truetype');       
+    font-style: normal;
+    font-weight: normal;
+    text-rendering: optimizeLegibility;
+}

@@ -1,0 +1,34 @@
+<div class="container members-list" style="margin-top: 80px;">
+    <div class="table table-wrapper">
+        <table class="table-striped table-hover" id="table-data" style="min-width: 1100px">
+            <thead>
+                <tr>
+                    <td>SLNo</td>
+                    <td>Bill Month</td>
+                    <td>Bill Amount</td>
+                    <td>Remarks</td>
+                    <td>Date Paid</td>
+                </tr>
+            </thead>
+            <tbody>
+                <?php if(!empty($list)): ?>
+                    <?php foreach($list as $row_data => $column_val): ?>
+                        <tr>
+                            <td><?= $column_val->id; ?></td>
+                            <td><?= date('F Y', strtotime($column_val->bill_month)); ?></td>
+                            <td><?= $column_val->bill_amount; ?></td>
+                            <td><?= $column_val->bill_status; ?></td> 
+                            <td><?= date('F d, Y', strtotime($column_val->date_bill_paid)); ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+            </tbody>
+        </table>
+    </div> 
+    <!-- <p class="text-center developer">Developed by: Benigno Entera Ambus Jr.</p>    -->
+</div>
+<script>
+    $(document).ready(function(){
+        $("#table-data").DataTable();
+    })
+</script>

@@ -1,0 +1,93 @@
+<div id="myNavbar" class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">	
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>			
+            <a href="#" class="navbar-brand">MAGMA</a>
+        </div>
+        <div class="navbar-collapse collapse">	
+            <ul class="nav navbar-nav navbar-right">
+
+                <?php if($this->session->userdata('user_type') == 'Member'): ?>
+                    <li>
+                        <a href="<?= base_url(); ?>page/view/announcement.html" class="menu">ANNOUNCEMENT</a>       
+                    </li>
+                <?php endif; ?>
+
+                <?php if($this->session->userdata('user_type') != 'Guest' && $this->session->userdata('user_type') != 'Member'): ?>
+                    <li id="dropdown">
+                        <a href="#" data-toggle="dropdown" aria-expanded="false" class="dropdown-toggle">ANNOUNCEMENT &nbsp;<div class="caret"></div>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="<?= base_url(); ?>page/announcement/create.html"><i class="fa fa-pencil"></i> Create Announcement</a>
+                                    <a href="<?=base_url(); ?>page/view/announcement.html"><i class="fa fa-search"></i> View Announcements</a>
+                                </li>
+                            </ul>
+                        </a>
+                    </li>
+                <?php endif; ?>
+
+                <?php if($this->session->userdata('user_type') != 'Guest'): ?>
+                    <li class="dropdown">
+                        <a href="#" data-toggle="dropdown" aria-expanded="false" class="dropdown-toggle">PROFILE &nbsp;<div class="caret"></div>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="<?= base_url(); ?>page/user/profile.html/<?= $this->session->userdata('user_call_sign'); ?>/"><i class="fa fa-user-circle"></i>&nbsp; My Profile</a>
+                                    <a href="<?=base_url();?>page/update/information.html/<?= $this->session->userdata('user_id'); ?>/<?= $this->session->userdata('user_call_sign'); ?>/"><i class="fa fa-edit"></i> Edit Profile</a>
+                                </li>
+                            </ul>
+                        </a>
+                    </li>
+                <?php endif; ?>
+
+                <?php if($this->session->userdata('user_type') == 'Admin' || $this->session->userdata('user_type') == 'Secretary' 
+                        || $this->session->userdata('user_type') == 'Treasurer'): ?>
+                    <li class="dropdown">
+                        <a href="#" data-toggle="dropdown" aria-expanded="false" class="dropdown-toggle">MEMBERS &nbsp;<div class="caret"></div>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="<?= base_url(); ?>page/form/members-information-sheet.html"><i class="fa fa-users"></i>&nbsp; Add New Member</a>
+                                    <a href="<?= base_url(); ?>page/view/members-list.html"><i class="fa fa-search"></i>&nbsp; View All Member</a>
+                                </li>
+                            </ul>
+                        </a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" data-toggle="dropdown" aria-expanded="false" class="dropdown-toggle">USER &nbsp;<div class="caret"></div>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="<?= base_url(); ?>page/user/add-system-user.html/new-user"><i class="fa fa-user-plus"></i>&nbsp; Add New User</a>
+                                    <a href="<?= base_url(); ?>page/view/users-list.html"><i class="fa fa-search"></i>&nbsp; View All Users</a>
+                                    <a href="<?= base_url(); ?>user/logout"><i class="fa fa-sign-out"></i>&nbsp; Sign-Out</a>
+                                </li>
+                            </ul>
+                        </a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" data-toggle="dropdown" aria-expanded="false" class="dropdown-toggle">DUES &nbsp;<div class="caret"></div>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="#" data-toggle="modal" data-target="#billings"><i class="fa fa-plus"></i>&nbsp; Set Members Due</a>
+                                    <a href="<?= base_url(); ?>page/view/members-bill.html"><i class="fa fa-search"></i>&nbsp; View Members Due</a>
+                                </li>
+                            </ul>
+                        </a>
+                    </li>
+                <?php endif; ?>
+
+                <?php if($this->session->userdata('user_type') == 'Member'): ?>
+                    <<li><a href="<?= base_url() ?>page/view/my-bills.html">MY DUES</a></li>
+                    <li><a href="<?= base_url(); ?>user/logout">SIGN-OUT</a></li>
+                <?php endif; ?>
+
+                <?php if($this->session->userdata('user_type') == 'Guest'): ?>
+                    <li><a href="<?= base_url(); ?>user/logout">SIGN-OUT</a></li>
+                <?php endif; ?>
+            </ul>
+        </div>
+    </div>
+</div>
+    

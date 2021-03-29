@@ -1,0 +1,91 @@
+<div class="container members-list" style="margin-top: 100px;">
+    <div class="table table-wrapper">
+        <table class="table-striped table-hover" id="table-data" style="min-width: 1100px">
+            <thead>
+                <tr>
+                    <td>SLNo</td>
+                    <td>Full Name</td>
+                    <td>Call Sign</td>
+                    <td>Home Address</td>
+                    <td>Contact</td>
+                    <td>Actions</td>
+                </tr>
+            </thead>
+            <tbody>
+                <?php if(!empty($list)): ?>
+                    <?php foreach($list as $row_data => $column_val): ?>
+                        <tr>
+                            <td class="id<?= $column_val->user_call_sign; ?>" id="<?= $column_val->id; ?>"><?= $column_val->id; ?></td>
+                            <td><?= $column_val->full_name; ?></td>
+                            <td><?= $column_val->user_call_sign; ?></td>
+                            <td><?= $column_val->home_address; ?></td>
+                            <td><?= $column_val->contact; ?></td>
+                            <td>
+                                <a href="<?=base_url()?>page/update/information.html/<?= $column_val->id; ?>/<?= $column_val->user_call_sign; ?>/" id="<?= $column_val->user_call_sign; ?>" class="btn btn-primary btn-xs">Edit</a>
+                                <a href="" id="<?= $column_val->id; ?>" class="btn btn-danger btn-xs delete">Delete</a>
+                                <!-- <a href="#" id="<?= $column_val->user_call_sign; ?>" class="btn btn-warning btn-xs pay" data-toggle="modal" data-target="#login">Pay</a> -->
+                                <!-- <a href="#" id="<?= $column_val->user_call_sign; ?>" class="btn btn-success btn-xs">Profile</a> -->
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+            </tbody>
+        </table>
+    </div> 
+    <!-- <p class="text-center developer">Developed by: Benigno Entera Ambus Jr.</p>    -->
+</div>
+
+<script>
+    $(document).ready(function(){
+        $("#table-data").DataTable();
+
+        $('.delete').click(function(){
+            if(confirm('Are you sure you want to delete? This action cannot be undone.') == true)
+            {
+                $.ajax({
+                    url: '<?= base_url(); ?>user/delete_info',
+                    type: 'POST',
+                    data: {id: $(this).attr('id')},
+                    success:function(data){
+                        const log_oObj = JSON.parse(data);
+                        console.log(log_oObj);
+                        if(log_oObj.delete == true){
+                            swal(
+                                {
+                                    title: 'SUCCESSFULL',
+                                    text : log_oObj.message,
+                                    type : "success",
+                                    showCancelButton  : false,
+                                    showConfirmButton  : true,
+                                    confirmButtonColor: "#A5DC86",
+                                    confirmButtonText : "OK",
+                                    cancelButtonText  : "",
+                                    closeOnConfirm    : true,
+                                    closeOnCancel     : false 
+                                }
+                            );
+                        }
+                        else{
+                            swal(
+                            {
+                                title: "ERROR",
+                                text : log_oObj.message,
+                                type : "error",
+                                showCancelButton  : false,
+                                confirmButtonColor: "#F27474",
+                                confirmButtonText : "OK",
+                                cancelButtonText  : "",
+                                closeOnConfirm    : true,
+                                closeOnCancel     : false 
+                            }
+                        );
+                        } 
+                    }
+                });
+            }
+            else{
+                return false;
+            }
+        })
+    })
+</script>

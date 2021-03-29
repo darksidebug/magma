@@ -1,0 +1,129 @@
+<script>
+    $(document).ready(function(){
+
+        $("input").focus(function(){
+            $(this).parent().addClass('slide-up');
+        })
+        $("input").blur(function(){
+            if($(this).val() == ""){
+                $(this).parent().removeClass('slide-up');
+            }
+        })
+        $("select").click(function(){
+            $(this).parent().addClass('slide-up');
+        })
+        $("select").blur(function(){
+            if($(this).val() == ""){
+                $(this).parent().removeClass('slide-up');
+            }
+        })
+        $("label").click(function(){
+            $(this).parent().addClass('slide-up');
+            $(this).parent().find('input').focus();
+        })
+        
+        var count = 1, inc = 1, counter = 1, i = 1;
+        $(document).on('click', '.navbar-toggler', function(){
+            if(count == 1){
+                count++;
+                $(this).addClass('rotate-towards');
+                $(this).parent().parent().addClass('show-menu');
+                $(this).parent().parent().removeClass('hide-menu');
+                $(this).removeClass('rotate-backwards');
+            }
+            else if(count == 2){
+                count--;
+                $(this).addClass('rotate-backwards');
+                $(this).parent().parent().addClass('hide-menu');
+                $('.profile-navbar-sub').addClass('hide-profile-submenu');
+                $('.members-navbar-sub').addClass('hide-members-submenu');
+                $('.account-navbar-sub').addClass('hide-account-submenu');
+                $(this).removeClass('rotate-towards');
+                $(this).parent().parent().removeClass('show-menu');
+                $('.profile-navbar-sub').removeClass('show-profile-submenu');
+                $('.members-navbar-sub').removeClass('show-members-submenu');
+                $('.account-navbar-sub').removeClass('show-account-submenu');
+                if(inc == 2){
+                    inc--;
+                }
+                if(counter == 2){
+                    counter--;
+                }
+                if(i == 2){
+                    i--;
+                }
+            }
+        })
+        
+        $(document).on('click', '.profile', function(){
+            if(counter == 1){
+                counter++;
+                $('.profile-navbar-sub').addClass('show-profile-submenu');
+                $('.members-navbar-sub').addClass('hide-members-submenu');
+                $('.account-navbar-sub').addClass('hide-account-submenu');
+                $('.profile-navbar-sub').removeClass('hide-profile-submenu');
+                $('.members-navbar-sub').removeClass('show-members-submenu');
+                $('.account-navbar-sub').removeClass('show-account-submenu');
+                if(inc == 2){
+                    inc--;
+                }
+                else if(i == 2){
+                    i--;
+                }
+            }
+            else if(counter == 2){
+                counter--;
+                $('.profile-navbar-sub').addClass('hide-profile-submenu');
+                $('.profile-navbar-sub').removeClass('show-profile-submenu');
+            }
+        })
+
+        $(document).on('click', '.members', function(){
+            if(inc == 1){
+                inc++;
+                $('.members-navbar-sub').addClass('show-members-submenu');
+                $('.profile-navbar-sub').addClass('hide-profile-submenu');
+                $('.account-navbar-sub').addClass('hide-account-submenu');
+                $('.members-navbar-sub').removeClass('hide-members-submenu');
+                $('.profile-navbar-sub').removeClass('show-profile-submenu');
+                $('.account-navbar-sub').removeClass('show-account-submenu');
+                if(counter == 2){
+                    counter--;
+                }
+                else if(i == 2){
+                    i--;
+                }
+            }
+            else if(inc == 2){
+                inc--;
+                $('.members-navbar-sub').addClass('hide-members-submenu');
+                $('.members-navbar-sub').removeClass('show-members-submenu');
+            }
+        })
+
+        $(document).on('click', '.account', function(){
+            if(i == 1){
+                i++;
+                $('.account-navbar-sub').addClass('show-account-submenu');
+                $('.members-navbar-sub').addClass('hide-members-submenu');
+                $('.profile-navbar-sub').addClass('hide-profile-submenu');
+                $('.account-navbar-sub').removeClass('hide-account-submenu');
+                $('.profile-navbar-sub').removeClass('show-profile-submenu');
+                $('.members-navbar-sub').removeClass('show-members-submenu');
+                if(counter == 2){
+                    counter--;
+                }
+                else if(inc == 2){
+                    inc--;
+                }
+            }
+            else if(i == 2){
+                i--;
+                $('.account-navbar-sub').addClass('hide-account-submenu');
+                $('.account-navbar-sub').removeClass('show-account-submenu');
+            }
+        })
+    })
+</script>
+</body>
+</html>

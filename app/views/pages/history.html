@@ -1,0 +1,44 @@
+<div class="container members-list" style="margin-top: 80px;">
+    <div class="table table-wrapper">
+        <table class="table-striped table-hover" id="table-data" style="min-width: 1100px">
+            <thead>
+                <tr>
+                    <td>SLNo</td>
+                    <td>Payment Amount</td>
+                    <td>Bill Month</td>
+                    <td>Date Paid</td>
+                    <!-- <?php if($this->session->userdata('user_type') != 'Member'): ?>
+                        <td>Actions</td>
+                    <?php endif; ?> -->
+                </tr>
+            </thead>
+            <tbody>
+                <?php if(!empty($result)): ?>
+                    <?php foreach($result as $row_data => $column_val): ?>
+                        <tr>
+                            <td class="id<?= $column_val->user_call_sign; ?>" id="<?= $column_val->id; ?>"><?= $column_val->id; ?></td>
+                            <td><?= $column_val->payment_amount; ?></td>
+                            <td><?= date('F Y', strtotime($column_val->bill_month)); ?></td>
+                            <td><?= date('F d, Y', strtotime($column_val->date_paid)); ?></td>
+                            <!-- <?php if($this->session->userdata('user_type') != 'Member'): ?>
+                                <td>
+                                    <a href="#" id="<?= $column_val->user_call_sign; ?>" class="btn btn-warning btn-xs pay" data-toggle="modal" data-target="#login"><i class="fa fa-edit"></i> Edit</a>
+                                </td>
+                            <?php endif; ?> -->
+                            <!-- <td>
+                                <?php if($column_val->total != 0): ?>
+                                <?php endif; ?>
+                            </td> -->
+                        </tr>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+            </tbody>
+        </table>
+    </div> 
+    <!-- <p class="text-center developer">Developed by: Benigno Entera Ambus Jr.</p>    -->
+</div>
+<script>
+    $(document).ready(function(){
+        $("#table-data").DataTable();
+    })
+</script>

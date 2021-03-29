@@ -1,0 +1,77 @@
+<div id="myNavbar" class="navbar navbar-nav" role="navigation">
+    <div class="container-fluid">
+        <div class="container hide-menu">  
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggler">
+                    <div class="icon-bar"></div>
+                    <div class="icon-bar"></div>
+                    <div class="icon-bar"></div>
+                </button>
+                <a href="#" class="navbar-brand" style="font-size: 30px;">MAGMA <i class="fa fa-bell-o" style="margin-left: 10px; font-size: 16px;">
+                    <span class="badge badge-danger count" style="background: #d9534f; margin-left: -10px; font-size: 10px; 
+                    padding: 2px 4px; margin-top: -15px">0</span>
+                </i></a>
+            </div>
+            <div class="navbar">
+                <ul class="nav">
+                    <li id="menu"><a href="#" class="menu"><i class="fa fa-home"></i></a></li>
+                    
+                    <li id="menu">
+                        <a href="#" class="menu profile"><i class="fa fa-user-circle"></i></a>
+                        <div class="profile-navbar-sub hide-profile-submenu">
+                            <ul class="nav profile-sub-menu">
+                                <li id="sub"><a href="#" class="sub view"><i class="fa"></i></a></li>
+                                <li id="sub"><a href="#" class="sub edit"><i class="fa"></i></a></li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <!-- <?php if($this->session->userdata('user-type') == 'member'): ?>
+                        <li id="menu"><a href="#" class="menu account"><i class="fa fa-sign-out"></i></a>
+                        <li id="menu"><a href="#" class="menu account"><i class="fa fa-users"></i></a>
+                    <?php endif; ?>
+                    <?php if($this->session->userdata('user-type') == 'admin'): ?>
+                        <li id="menu"><a href="#" class="menu members"><i class="fa fa-users"></i></a>
+                            <div class="members-navbar-sub hide-members-submenu">
+                                <ul class="nav members-sub-menu">
+                                    <li id="sub"><a href="#" class="sub add"><i class="fa"></i></a></li>
+                                    <li id="sub"><a href="#" class="sub view"><i class="fa"></i></a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li id="menu"><a href="#" class="menu account"><i class="fa fa-lock"></i></a>
+                            <div class="account-navbar-sub hide-account-submenu">
+                                <ul class="nav account-sub-menu">
+                                    <li id="sub"><a href="#" class="sub add"><i class="fa"></i></a></li>
+                                    <li id="sub"><a href="#" class="sub view"><i class="fa"></i></a></li>
+                                    <li id="sub"><a href="#" class="sub out"><i class="fa"></i></a></li>
+                                </ul>
+                            </div>
+                        </li>
+                    <?php endif; ?> -->
+
+                    <li id="menu"><a href="#" class="menu members"><i class="fa fa-users"></i></a>
+                        <div class="members-navbar-sub hide-members-submenu">
+                            <ul class="nav members-sub-menu">
+                                <li id="sub"><a href="<?= base_url(); ?>page/form/members-information-sheet.html" class="sub add"><i class="fa"></i></a></li>
+                                <li id="sub"><a href="<?= base_url(); ?>page/view/members-list.html" class="sub view"><i class="fa"></i></a></li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li id="menu"><a href="#" class="menu account"><i class="fa fa-lock"></i></a>
+                        <div class="account-navbar-sub hide-account-submenu">
+                            <ul class="nav account-sub-menu">
+                                <li id="sub"><a href="<?= base_url(); ?>page/user/add-system-user.html" class="sub add"><i class="fa"></i></a></li>
+                                <li id="sub"><a href="<?= base_url(); ?>page/view/users-list.html" class="sub view"><i class="fa"></i></a></li>
+                                <li id="sub"><a href="<?= base_url(); ?>user/logout" class="sub out"><i class="fa"></i></a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    
+                    <li id="menu"><a href="#" class="menu"><i class="fa fa-money"></i></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

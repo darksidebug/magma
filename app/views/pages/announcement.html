@@ -1,0 +1,289 @@
+
+<div class="container announcement" style="margin-top: 120px;">
+    <div class="row">
+        <div class="col-md-12">
+            <br>
+            <h4>RE: <span id="re"></span></h3>
+            <h4>SUBJECT: <span id="subject"></span></h3>
+            <h4>DATE: <span id="date"></span></h4>
+            <br>
+            <p><h4 id="content"></h4>
+            </p>
+            <br>
+            <h4 id="closing">Thank You! God Bless All</h4>
+            <br>
+            <input type="hidden" name="comment_id" value="">
+            <?php if($this->session->userdata('user_type') != 'Member'): ?>
+                <a href="" id="" class="btn btn-info btn-sm update"><i class="fa fa-edit"></i> UPDATE</a>
+                <button id="" class="btn btn-danger btn-sm cancel"><i class="fa fa-times"></i> CANCEL</button>
+                <br>
+                <br>
+            <?php endif; ?>
+        </div>
+    </div>
+</div>
+<div class="container">
+   <div class="row">
+        <div class="col-md-12">
+            <button class="btn btn-warning btn-sm" id="comment"><i class="fa fa-commenting"></i> COMMENTS</button>
+            <button class="btn btn-info btn-sm prev"><i class="fa fa-angle-double-left"></i> PREVIOUS</button>
+            <button class="btn btn-info btn-sm nxt">NEXT <i class="fa fa-angle-double-right"></i></button>
+        </div>
+   </div> 
+</div>
+<div class="container show-comments">
+    <div class="row">
+        <h6 id="all">All Comments</h6>
+        <div class="all-comments">
+            <div class="member-comment">
+                <div class="col-sm-12" id="comments-section">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+<div class="container comments">
+    <div class="row">
+        <form method="post">
+            <div class="col-md-6 col-sm-6">
+                <h5>Leave your comments here.</h5>
+                <input type="hidden" name="id" value="">
+                <div class="form-group">
+                    <textarea class="form-control" name="comment" cols="30" rows="5" placeholder="Comment" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i> ADD COMMENTS</button>
+                <div class="comment_message" style="margin-top: 10px; visibility: hidden;"></div>
+            </div>
+            <div class="col-md-6 col-sm-6"></div>
+        </form>
+    </div> 
+</div>
+<script>
+    $(document).ready(function(){
+
+        $("input").focus(function(){
+            $(this).parent().addClass('slide-up');
+        })
+        $("input").blur(function(){
+            if($(this).val() == ""){
+                $(this).parent().removeClass('slide-up');
+            }
+        })
+        $("select").click(function(){
+            $(this).parent().addClass('slide-up');
+        })
+        $("select").blur(function(){
+            if($(this).val() == ""){
+                $(this).parent().removeClass('slide-up');
+            }
+        })
+        $("label").click(function(){
+            $(this).parent().addClass('slide-up');
+            $(this).parent().find('input').focus();
+        })
+
+        var slide = true;
+        $("#comment").click(function(){
+            if(slide == true){
+                $('.show-comments').addClass('slide-down');
+                slide = false;
+            }
+            else{
+                $('.show-comments').removeClass('slide-down');
+                slide = true;
+            }
+            load_comments($('input[name="comment_id"]').val());
+        })
+        
+        setInterval(function(){
+            load_announcement()
+        }, 60000);
+
+        load_announcement();
+        function load_announcement(){
+            $.ajax({
+                url: '<?= base_url(); ?>user/get_announcement',
+                type: 'POST',
+                data: {max: 'id'},
+                success:function(data){
+                    const log_oObj = JSON.parse(data);
+                    console.log(log_oObj);
+                    log_oObj.forEach(element => {
+                        $('#re').html(element.re);
+                        $('#subject').html(element.subject);
+                        $('#date').html(element.date);
+                        $('#content').html('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + element.content);
+                        $('#closing').html(element.closing);
+                        $('.update').attr('href', '<?= base_url() ?>page/update/update-announcement.html/' + element.id + '/<?= $this->session->userdata("user_call_sign") ?>/');
+                        $('.cancel').attr('id', element.id);
+                        $('.prev').attr('id', (parseInt(element.id) - 1));
+                        $('.nxt').attr('id', (parseInt(element.id) + parseInt(1)));
+                        $('input[name="id"]').val(element.id);
+                        $('input[name="comment_id"]').val(element.id);
+                    });
+                }
+            });
+        }
+
+        function announcements(id){
+            $.ajax({
+                url: '<?= base_url(); ?>user/get_announcement_byId',
+                type: 'POST',
+                data: {id: id},
+                success:function(data){
+                    const log_oObj = JSON.parse(data);
+                    console.log(log_oObj);
+                    log_oObj.forEach(element => {
+                        $('#re').html(element.re);
+                        $('#subject').html(element.subject);
+                        $('#date').html(element.date);
+                        $('#content').html('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + element.content);
+                        $('#closing').html(element.closing);
+                        $('.update').attr('href', '<?= base_url() ?>page/update/update-announcement.html/' + element.id + '/<?= $this->session->userdata("user_call_sign") ?>/');
+                        $('.cancel').attr('id', element.id);
+                        $('.prev').attr('id', (parseInt(element.id) - 1));
+                        $('.nxt').attr('id', (parseInt(element.id) + parseInt(1)));
+                        $('input[name="id"]').val(element.id);
+                        $('input[name="comment_id"]').val(element.id);
+                    });
+                }
+            });
+        }
+
+        $('.cancel').click(function(){
+            if(confirm('Are you sure you want to cancel this announcement?')){
+                $.ajax({
+                    url: '<?= base_url(); ?>user/delete_announcement',
+                    type: 'POST',
+                    data: {id: $(this).attr('id')},
+                    success:function(data){
+                        const log_oObj = JSON.parse(data);
+                        console.log(log_oObj);
+                        if(log_oObj.delete == true){
+                            swal(
+                                {
+                                    title: "SUCCESSFUL",
+                                    text : log_oObj.message,
+                                    type : "success",
+                                    showCancelButton  : false,
+                                    confirmButtonColor: "#A5DC86",
+                                    confirmButtonText : "OK",
+                                    cancelButtonText  : "",
+                                    closeOnConfirm    : true,
+                                    closeOnCancel     : false 
+                                }
+                            );
+                            load_announcement();
+                        }
+                        else{
+                            swal(
+                                {
+                                    title: "ERROR",
+                                    text : log_oObj.message,
+                                    type : "error",
+                                    showCancelButton  : false,
+                                    confirmButtonColor: "#F27474",
+                                    confirmButtonText : "OK",
+                                    cancelButtonText  : "",
+                                    closeOnConfirm    : true,
+                                    closeOnCancel     : false 
+                                }
+                            );
+                        } 
+                    }
+                });
+            }
+        })
+        
+        var attr_id = 0;
+        $('.prev').click(function(){
+            attr_id = $(this).attr('id');
+            if(attr_id != 0){
+                load_comments(attr_id);
+                announcements(attr_id)
+                $('.prev').attr('id', (attr_id -= 1));
+            }
+        })
+        
+        var nxt_id = 0;
+        $('.nxt').click(function(){
+            nxt_id = $(this).attr('id');
+            load_comments(nxt_id);
+            announcements(nxt_id);
+            $('.nxt').attr('id', (nxt_id = parseInt(nxt_id) + 1));
+        })
+
+        $('form').on('submit', function(e){
+            e.preventDefault();
+            var html = '';
+            $.ajax({
+                url: '<?= base_url(); ?>user/save_comment',
+                type: 'POST',
+                data: $('form').serialize(),
+                success:function(data){
+                    const log_oObj = JSON.parse(data);
+                    console.log(log_oObj);
+                    if(log_oObj.insert == true){
+                        $('form')[0].reset();
+                        html += '<div class="alert alert-success" style="border-radius: 0px;"><span>'+ log_oObj.message +'</span></div>';
+                        $('.comment_message').css('visibility', 'visible');
+                        $('.comment_message').html(html);
+                        load_comments($('input[name="comment_id"]').val());
+                        setInterval(function(){
+                            $('.comment_message').css('visibility', 'hidden');
+                        }, 3000);
+                    }
+                    else{
+                        html += '<div class="alert alert-danger" style="border-radius: 0px;"><span>'+ log_oObj.message +'</span></div>';
+                        $('.comment_message').html(html);
+                        setInterval(function(){
+                            $('.comment_message').css('visibility', 'hidden');
+                        }, 1000);
+                    } 
+                }
+            });
+        })
+
+        function load_comments(id){
+            var html = '';
+            $.ajax({
+                url: '<?= base_url(); ?>user/get_comments',
+                type: 'POST',
+                data: {id: id},
+                success:function(data){
+                    const log_oObj = JSON.parse(data);
+                    console.log(log_oObj);
+                    if(log_oObj.length != 0){
+                        log_oObj.forEach(element => {
+                            html += '<div class="row">';
+                            html +=    '<div class="col-sm-1">';
+                            html +=         '<div class="img-wrapper">';
+                                                element.account.forEach(element_acc => {
+                            html +=                 '<img id="preview" src="<?=base_url();?>upload/'+ element_acc.image_name +'" alt="">';
+                                                })
+                                                
+                            html +=         '</div>';
+                            html +=    '</div>';
+                            html +=    '<div class="col-sm-11">';
+                            html +=        '<div class="comment-wrapper">';
+                            html +=             '<h5>'+ element.user_call_sign +'</h5>';
+                            html +=             '<p>'+ element.message +'</p>';
+                            html +=             '<i>'+ element.date_comment +'</i>';
+                            html +=        '</div>';
+                            html +=    '</div>';
+                            html += '</div>';
+                        })
+                        $('#all').html('All Comments');
+                        // html +=     '<small class="btn btn-sm">Load more comments ...</small>'
+                    }
+                    else{
+                        $('#all').html('No Comments Yet');
+                    }
+                    
+                    $('#comments-section').html(html);
+                }
+            });
+        }
+    })
+</script>
